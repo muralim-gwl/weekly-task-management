@@ -1,4 +1,5 @@
 import React from 'react';
+<<<<<<< Updated upstream
 import logo from './logo.svg';
 import './App.css';
 
@@ -21,6 +22,20 @@ function App() {
       </header>
     </div>
   );
+=======
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import './App.css';
+import LandingScreen from './individualComponents/LandingScreen/LandingScreen.js';
+
+function App() {
+ return (
+   <div className="App">
+     <Router>
+      <Route exact path="/" component={LandingScreen} />
+    </Router>
+   </div>
+ );
+>>>>>>> Stashed changes
 }
 
 export default App;
