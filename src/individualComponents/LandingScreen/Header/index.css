@@ -1,0 +1,25 @@
+.Header{
+    display:flex;
+    justify-content: space-between;
+   
+}
+.Buttons{
+   display:flex;
+   justify-content: space-between;
+   flex-basis: 7.5%;
+   height: 30px;
+   width : 30px;
+   padding:30px;
+   
+}
+.LogoImg{
+    height: 70px;
+    width: 100px;
+    margin: 0px;
+}
+.head h{
+    font-size: 30px;
+    text-transform: bold;
+    text-decoration:underline;
+    margin-left: 50px;
+}
