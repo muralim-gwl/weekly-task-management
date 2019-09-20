@@ -53,7 +53,16 @@ class App extends React.Component {
     dummyWeekValue: null,
 
     months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-
+    taskObj: {
+      tid: 1,
+      userid: 1,
+      monthName: 'February',
+      weekName: 'Week: 1',
+      taskName: 'Hello',
+      taskPoint: 2,
+      taskStatus: 'Complete',
+      taskActive: true
+    },
 
     taskTransaction: [{
       tid: 1,
@@ -158,9 +167,29 @@ class App extends React.Component {
       dummyWeekValue
     })
   }
+
+  handleChangeTask = (e, [mode] = "taskTransaction") => {
+
+    this.setState({
+      [mode]: {
+        ...this.state,
+        [mode]: e.target.value
+      }
+    });
+  };
+
+
+  handleChangeButton = () => {
+
+    const { taskObj, taskTransaction } = this.state
+    this.setState({
+      ...this.state,
+      taskTransaction: { ...taskTransaction, taskObj }
+    });
+  }
   render() {
-    const { user, taskTransaction, months, weeks, dummyMonthValue, dummyWeekValue, dummyCredential = {} } = this.state;
-    const { weekRestrictionHandler, handleChange, handleChangeButton, getWeek } = this;
+    const { user, taskTransaction, months, weeks, dummyMonthValue, dummyWeekValue, dummyCredential = {}, taskObj = {} } = this.state;
+    const { weekRestrictionHandler, handleChange, handleChangeButton, handleChangeTask, getWeek } = this;
 
 
     return (
@@ -169,7 +198,7 @@ class App extends React.Component {
           <Route exact path="/" component={LandingScreen} />
           <Route path='/user_login' component={(props) => <LoginScreen user={user} dummyCredential={dummyCredential} handleChange={handleChange} handleChangeButton={handleChangeButton}{...this.props} isAuthed={true} />} />
           <Route path='/admin_login' component={(props) => <LoginScreen user={user} dummyCredential={dummyCredential} handleChange={handleChange} handleChangeButton={handleChangeButton}{...this.props} isAuthed={true} />} />
-          <Route path='/userhome' component={(props) => <UserHome user={user} taskTransaction={taskTransaction} months={months} weeks={weeks} dummyMonthValue={dummyMonthValue} dummyWeekValue={dummyWeekValue} weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek} dummyCredential={dummyCredential} {...this.props} isAuthed={true} />} />
+          <Route path='/userhome' component={(props) => <UserHome user={user} taskTransaction={taskTransaction} months={months} weeks={weeks} dummyMonthValue={dummyMonthValue} dummyWeekValue={dummyWeekValue} weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek} dummyCredential={dummyCredential} taskObj={taskObj} handleChangeTask={handleChangeTask} handleChangeButton={handleChangeButton} {...this.props} isAuthed={true} />} />
           <Route path='/adminhome' component={(props) => <AdminLandingPage user={user} taskTransaction={taskTransaction} months={months} weeks={weeks} dummyMonthValue={dummyMonthValue} dummyWeekValue={dummyWeekValue} weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek} {...this.props} isAuthed={true} />} />
         </Router>
       </div>

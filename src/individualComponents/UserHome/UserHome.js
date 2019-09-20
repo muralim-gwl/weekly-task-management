@@ -1,14 +1,19 @@
 import React from 'react'
 import LogoHeader from '../../commonComponents/LogoHeader/LogoHeader.js'
 import MonthWeek from '../../commonComponents/MonthWeek/MonthWeek'
+import AddTaskScreen from '../AddTaskScreen/AddTaskScreen'
 import "./UserHome.css"
-import { withRouter } from 'react-router-dom'
-const UserHome = ({ user, taskTransaction, months, weeks, dummyMonthValue, dummyWeekValue, weekRestrictionHandler, getWeek, dummyCredential }) => {
+import { withRouter, Link, Route } from 'react-router-dom'
+
+const UserHome = ({ user, taskTransaction, months, weeks, dummyMonthValue, dummyWeekValue, weekRestrictionHandler, getWeek, dummyCredential, taskObj, handleChangeTask,handleChangeButton,props }) => {
     return (
         <div className="user-home">
             <div >
                 <LogoHeader />
                 <MonthWeek months={months} weeks={weeks} dummyMonthValue={dummyMonthValue} dummyWeekValue={dummyWeekValue} weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek} />
+                <Link to='/userhome/addtask' ><button>Add</button></Link>
+                <Route path='/userhome/addtask' component={(props) => <AddTaskScreen taskTransaction={taskTransaction} dummyCredential={dummyCredential} dummyMonthValue={dummyMonthValue} dummyWeekValue={dummyWeekValue} taskObj={taskObj} user={user} handleChangeTask = {handleChangeTask} handleChangeButton={handleChangeButton} {...props} />} />
+
                 <div>
                     {
                         user.map((element, index) => {
@@ -21,13 +26,8 @@ const UserHome = ({ user, taskTransaction, months, weeks, dummyMonthValue, dummy
                                                 {
                                                     (tvalue.monthName === dummyMonthValue && tvalue.weekName === dummyWeekValue && element.username === dummyCredential.username)
                                                         ?
-
-
                                                         <p>{element.id === tvalue.userid ? <p>{tvalue.taskName} {tvalue.taskPoint}<input type="checkbox"></input> </p> : null}
                                                         </p>
-
-
-
                                                         : null
                                                 }
                                             </div>
@@ -36,13 +36,6 @@ const UserHome = ({ user, taskTransaction, months, weeks, dummyMonthValue, dummy
 
                                     )}
                                 </div>
-
-
-
-
-
-
-
                             )
                         })
                     }
