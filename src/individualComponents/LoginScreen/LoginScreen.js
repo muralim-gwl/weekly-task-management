@@ -9,6 +9,7 @@ class Login extends React.Component {
           username: null,
           password: null
         }
+        
       };
 
       handleChange = (value, key) => {
@@ -23,14 +24,15 @@ class Login extends React.Component {
         const { userCredential } = this.state;
         const {defaultCredential}= this.state;
     
-        if (defaultCredential.username == userCredential.username && defaultCredential.password == userCredential.password) {
+        if ( userCredential.username==="gwl" &&  userCredential.password === "gwl@123") {
          
-         alert("sucessfully logged in")
+         alert("sucessfully logged in as user")
           
-        }else{
-          alert("Please enter valid credientials")
+        }else if (userCredential.username ==="admin" && userCredential.password ==="admin"){
+          alert("Successfully logged in as admin ")
     
-        }
+        }else 
+            alert("xxx")
     
       }
 

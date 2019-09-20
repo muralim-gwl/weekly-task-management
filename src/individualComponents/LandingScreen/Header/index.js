@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.css';
+import { Link } from 'react-router-dom';
 class Header extends React.Component{
     render (){
         return (
@@ -12,10 +13,10 @@ class Header extends React.Component{
                          <h>Weekly Task Management System </h>
                      </div>
                      <div className="Buttons" >
-                        <button type="button" onClick={{}}>
+                        <button type="button" onClick={e=>{this.props.history.push("/user_login")}}>
                             User
                         </button>
-                        <button type="button" onClick={{}}>
+                        <button type="button" onClick={e=>{this.props.history.push("/admin_login")}}>
                             Admin
                     </button>
                     </div>
