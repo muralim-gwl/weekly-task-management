@@ -26,7 +26,7 @@ const UserHome = ({ user, taskTransaction, months, weeks, dummyMonthValue, dummy
                                                 {
                                                     (tvalue.monthName === dummyMonthValue && tvalue.weekName === dummyWeekValue && element.username === dummyCredential.username)
                                                         ?
-                                                        <p>{element.id === tvalue.userid ? <p>{tvalue.taskName} {tvalue.taskPoint}<input type="checkbox"></input> </p> : null}
+                                                        <p style={{background:'blue',color:'white'}}>{element.id === tvalue.userid ? <p>{tvalue.taskName} {tvalue.taskPoint}points<input type="checkbox"></input> </p> : null}
                                                         </p>
                                                         : null
                                                 }
