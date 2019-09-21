@@ -12,22 +12,25 @@ const AdminLandingPage = ({ user, taskTransaction, months, weeks, dummyMonthValu
             {
                 user.map((element, index) => {
                     return (
-                        <ol>{element.name}
-                            {taskTransaction.map((elTask, index) => {
-                                return (
-                                    <div>
-                                        {
-                                            (dummyMonthValue === elTask.monthName && dummyWeekValue === elTask.weekName) ?
+                        <div>
+                            {element.type == 'user' ?
+                                <ol>{element.name}
+                                    {taskTransaction.map((elTask, index) => {
+                                        return (
+                                            <div>
+                                                {
+                                                    (dummyMonthValue === elTask.monthName && dummyWeekValue === elTask.weekName) ?
 
-                                                <p>{element.id === elTask.userid ?
-                                                    <p>{elTask.taskName} {elTask.taskPoint} <pre style={{ background: 'green', width: '10px', height: '10px' }}></pre></p>
-                                                    : null}
+                                                        <p>{element.id === elTask.userid ?
+                                                            <p style={{ background: 'dodgerBlue', color: 'white' }}>{elTask.taskName} {elTask.taskPoint}points <input style={{ background: 'green', width: '10px', height: '10px' }}></input></p>
+                                                            : null}
 
-                                                </p> : null}
-                                    </div>
-                                )
-                            })}
-                        </ol>
+                                                        </p> : null}
+                                            </div>
+                                        )
+                                    })}
+                                </ol> : null}
+                        </div>
                     )
                 })
             }

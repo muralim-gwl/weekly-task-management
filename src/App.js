@@ -58,7 +58,7 @@ class App extends React.Component {
       userid: 1,
       monthName: 'February',
       weekName: 'Week: 1',
-      taskName: 'Hello',
+      taskName: 'Task Name 1',
       taskPoint: 2,
       taskStatus: 'Complete',
       taskActive: true
@@ -69,7 +69,7 @@ class App extends React.Component {
       userid: 1,
       monthName: 'September',
       weekName: 'Week: 2',
-      taskName: 'Always eating food',
+      taskName: 'Task Name 1',
       taskPoint: 2,
       taskStatus: 'Incomplete',
       taskActive: true
@@ -79,7 +79,7 @@ class App extends React.Component {
       userid: 1,
       monthName: 'September',
       weekName: 'Week: 1',
-      taskName: 'Always disturbing',
+      taskName: 'Task Name 1',
       taskPoint: 4,
       taskStatus: 'Complete',
       taskActive: true
@@ -89,7 +89,7 @@ class App extends React.Component {
       userid: 1,
       monthName: 'September',
       weekName: 'Week: 1',
-      taskName: 'Always complaining',
+      taskName: 'Task Name 2',
       taskPoint: 4,
       taskStatus: 'Complete',
       taskActive: true
@@ -99,7 +99,7 @@ class App extends React.Component {
       userid: 2,
       monthName: 'September',
       weekName: 'Week: 1',
-      taskName: 'Always messing around',
+      taskName: 'Task Name 1',
       taskPoint: 8,
       taskStatus: 'Complete',
       taskActive: true
@@ -109,7 +109,7 @@ class App extends React.Component {
       userid: 4,
       monthName: 'September',
       weekName: 'Week: 1',
-      taskName: 'Always ',
+      taskName: 'Task Name 1',
       taskPoint: 8,
       taskStatus: 'Complete',
       taskActive: true
@@ -119,7 +119,7 @@ class App extends React.Component {
       userid: 4,
       monthName: 'September',
       weekName: 'Week: 2',
-      taskName: 'Bye',
+      taskName: 'Task Name 1',
       taskPoint: 4,
       taskStatus: 'Complete',
       taskActive: true
@@ -129,7 +129,7 @@ class App extends React.Component {
       userid: 1,
       monthName: 'February',
       weekName: 'Week: 1',
-      taskName: 'Hello',
+      taskName: 'Task Name 1',
       taskPoint: 2,
       taskStatus: 'Complete',
       taskActive: true
