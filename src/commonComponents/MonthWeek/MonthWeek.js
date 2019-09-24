@@ -2,7 +2,7 @@ import React from 'react'
 import './MonthWeek.css'
 
 const MonthWeek =({months, weeks, dummyMonthValue, dummyWeekValue,weekRestrictionHandler,getWeek})=> {
-
+console.log(dummyWeekValue)
         return (
             <div className='month-display'>
                 <form>

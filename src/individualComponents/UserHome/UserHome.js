@@ -5,14 +5,14 @@ import AddTaskScreen from '../AddTaskScreen/AddTaskScreen'
 import "./UserHome.css"
 import { withRouter, Link, Route } from 'react-router-dom'
 
-const UserHome = ({ user, taskTransaction, months, weeks, dummyMonthValue, dummyWeekValue, weekRestrictionHandler, getWeek, dummyCredential, taskObj, handleChangeTask,handleChangeButton,props }) => {
+const UserHome = ({ user, taskTransaction, months, weeks, dummyMonthValue, dummyWeekValue, weekRestrictionHandler, getWeek, dummyCredential, taskObj, handleChangeTask, handleChangeButton, deleteHandler, userCheckboxHandler, props }) => {
     return (
         <div className="user-home">
             <div >
                 <LogoHeader />
                 <MonthWeek months={months} weeks={weeks} dummyMonthValue={dummyMonthValue} dummyWeekValue={dummyWeekValue} weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek} />
                 <Link to='/userhome/addtask' ><button>Add</button></Link>
-                <Route path='/userhome/addtask' component={(props) => <AddTaskScreen taskTransaction={taskTransaction} dummyCredential={dummyCredential} dummyMonthValue={dummyMonthValue} dummyWeekValue={dummyWeekValue} taskObj={taskObj} user={user} handleChangeTask = {handleChangeTask} handleChangeButton={handleChangeButton} {...props} />} />
+                <Route path='/userhome/addtask' component={(props) => <AddTaskScreen taskTransaction={taskTransaction} dummyCredential={dummyCredential} dummyMonthValue={dummyMonthValue} dummyWeekValue={dummyWeekValue} taskObj={taskObj} user={user} handleChangeTask={handleChangeTask} handleChangeButton={handleChangeButton} {...props} />} />
 
                 <div>
                     {
@@ -20,13 +20,18 @@ const UserHome = ({ user, taskTransaction, months, weeks, dummyMonthValue, dummy
                             return (
 
                                 <div>
-                                    {taskTransaction.map(tvalue => {
+                                    {taskTransaction.map((tvalue, tindex) => {
                                         return (
                                             <div>
                                                 {
-                                                    (tvalue.monthName === dummyMonthValue && tvalue.weekName === dummyWeekValue && element.username === dummyCredential.username)
+                                                    (tvalue.monthName === dummyMonthValue && tvalue.weekName === dummyWeekValue && element.username === dummyCredential.username && tvalue.taskActive)
                                                         ?
-                                                        <p style={{background:'blue',color:'white'}}>{element.id === tvalue.userid ? <p>{tvalue.taskName} {tvalue.taskPoint}points<input type="checkbox"></input> </p> : null}
+                                                        <p style={{ background: 'blue', color: 'white' }}>{element.id === tvalue.userid ?
+                                                            <p>{tvalue.taskName + ': '}
+                                                                points:{tvalue.taskPoint} 
+                                                                <input type="checkbox" disabled={tvalue.taskStatus} onChange={() => userCheckboxHandler(tindex)}></input>
+                                                                <button onClick={() => deleteHandler(tindex)}>Delete</button>
+                                                            </p> : null}
                                                         </p>
                                                         : null
                                                 }
