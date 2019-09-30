@@ -5,6 +5,7 @@ import LandingScreen from './individualComponents/LandingScreen';
 import LoginScreen from './individualComponents/LoginScreen/LoginScreen.js'
 import UserHome from './individualComponents/UserHome/UserHome'
 import AdminLandingPage from './individualComponents/AdminLandingPage/AdminLandingPage.js'
+import * as Highcharts from "highcharts";
 
 class App extends React.Component {
   state = {
@@ -60,8 +61,9 @@ class App extends React.Component {
       weekName: 'Week: 1',
       taskName: 'Task Name 1',
       taskPoint: 2,
-      taskStatus: 'Complete',
-      taskActive: true
+      taskStatus: false,
+      taskActive: true,
+      taskColor: 'red'
     },
 
     taskTransaction: [{
@@ -71,8 +73,9 @@ class App extends React.Component {
       weekName: 'Week: 2',
       taskName: 'Task Name 1',
       taskPoint: 2,
-      taskStatus: 'Incomplete',
-      taskActive: true
+      taskStatus: false,
+      taskActive: true,
+      taskColor: 'red'
     },
     {
       tid: 2,
@@ -81,8 +84,9 @@ class App extends React.Component {
       weekName: 'Week: 1',
       taskName: 'Task Name 1',
       taskPoint: 4,
-      taskStatus: 'Complete',
-      taskActive: true
+      taskStatus: false,
+      taskActive: true,
+      taskColor: 'red'
     },
     {
       tid: 2,
@@ -91,8 +95,9 @@ class App extends React.Component {
       weekName: 'Week: 1',
       taskName: 'Task Name 2',
       taskPoint: 4,
-      taskStatus: 'Complete',
-      taskActive: true
+      taskStatus: false,
+      taskActive: true,
+      taskColor: 'red'
     },
     {
       tid: 1,
@@ -101,8 +106,9 @@ class App extends React.Component {
       weekName: 'Week: 1',
       taskName: 'Task Name 1',
       taskPoint: 8,
-      taskStatus: 'Complete',
-      taskActive: true
+      taskStatus: false,
+      taskActive: true,
+      taskColor: 'red'
     },
     {
       tid: 1,
@@ -111,8 +117,20 @@ class App extends React.Component {
       weekName: 'Week: 1',
       taskName: 'Task Name 1',
       taskPoint: 8,
-      taskStatus: 'Complete',
-      taskActive: true
+      taskStatus: false,
+      taskActive: true,
+      taskColor: 'red'
+    },
+    {
+      tid: 1,
+      userid: 4,
+      monthName: 'September',
+      weekName: 'Week: 2',
+      taskName: 'Task Name 1',
+      taskPoint: 8,
+      taskStatus: false,
+      taskActive: true,
+      taskColor: 'red'
     },
     {
       tid: 1,
@@ -121,8 +139,9 @@ class App extends React.Component {
       weekName: 'Week: 2',
       taskName: 'Task Name 1',
       taskPoint: 4,
-      taskStatus: 'Complete',
-      taskActive: true
+      taskStatus: false,
+      taskActive: true,
+      taskColor: 'red'
     },
     {
       tid: 1,
@@ -131,11 +150,117 @@ class App extends React.Component {
       weekName: 'Week: 1',
       taskName: 'Task Name 1',
       taskPoint: 2,
-      taskStatus: 'Complete',
-      taskActive: true
+      taskStatus: false,
+      taskActive: true,
+      taskColor: 'red'
     }
-    ]
+    ],
+    barChart: {
+      chart: {
+        type: "column"
+      },
+      title: {
+        text: "Week Task Performance"
+      },
+      xAxis: {
+        type: "category"
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: "Points"
+        }
+      },
+      series: [
+        {
+          name: "Task Performance",
+          data: []
+        }
+      ]
+    }
   }
+  initialCalc = () => {
+    let { months, dummyMonthValue, dummyWeekValue,weeks } = this.state
+    let currentMonth = new Date().toString().substr(4, 3)
+    let currentWeek = Math.ceil((new Date().getDate()) / 7)
+    months.forEach(el => {
+      if (currentMonth === el.substr(0, 3))
+        dummyMonthValue = el
+    })
+    dummyWeekValue = 'Week: ' + currentWeek
+    weeks[0] = dummyWeekValue
+
+    this.setState({
+      dummyMonthValue,
+      dummyWeekValue,
+      weeks
+    })
+  }
+  componentDidMount() {
+    this.initialCalc()
+    try {
+      this.handleChartLogic()
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  componentDidUpdate() {
+    try {
+      this.handleChartLogic()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  handleChartLogic = () => {
+    const { barChart } = this.state;
+    Highcharts.chart("container", barChart);
+  }
+
+  handleData = (dwv) => {
+    let {
+      barChart,
+      dummyWeekValue,
+      taskTransaction,
+      dummyMonthValue,
+      user
+    } = this.state;
+
+    dummyWeekValue = dwv
+    let { series } = barChart;
+    series[0].data = []
+
+    user.forEach((userElement) => {
+      if (userElement.type === 'user') {
+        let pt = 0;
+        let temp = [];
+
+
+        taskTransaction.forEach((element, index) => {
+          if ((dummyMonthValue === element.monthName) && (dummyWeekValue === element.weekName) && element.taskStatus && element.taskActive) {
+            if (userElement.id === element.userid) {
+              pt += element.taskPoint;
+            }
+          }
+        });
+        temp = [userElement.name, pt];
+        series[0].data.push(temp);
+      }
+    });
+
+    barChart = {
+      ...barChart,
+      series
+    };
+
+    Highcharts.chart("container", barChart);
+
+    this.setState({
+      barChart,
+      dummyWeekValue
+    });
+  };
 
   handleChange = (value, key) => {
     const { dummyCredential } = this.state;
@@ -163,9 +288,14 @@ class App extends React.Component {
     let { dummyWeekValue } = this.state
     dummyWeekValue = e.target.value;
 
+
     this.setState({
       dummyWeekValue
     })
+    try {
+      this.handleData(dummyWeekValue)
+    }
+    catch (error) { }
   }
 
   handleChangeTask = (e, [mode] = "taskTransaction") => {
@@ -187,10 +317,32 @@ class App extends React.Component {
       taskTransaction: { ...taskTransaction, taskObj }
     });
   }
+
+  deleteHandler = (tindex) => {
+    const { taskTransaction } = this.state
+    taskTransaction[tindex].taskActive = false
+
+    this.setState({
+      taskTransaction: [
+        ...taskTransaction, taskTransaction
+      ]
+    })
+  }
+
+  userCheckboxHandler = (tindex) => {
+    const { taskTransaction } = this.state
+    taskTransaction[tindex].taskStatus = true
+    taskTransaction[tindex].taskColor = 'green'
+
+    this.setState({
+      taskTransaction: [
+        ...taskTransaction, taskTransaction
+      ]
+    })
+  }
   render() {
     const { user, taskTransaction, months, weeks, dummyMonthValue, dummyWeekValue, dummyCredential = {}, taskObj = {} } = this.state;
-    const { weekRestrictionHandler, handleChange, handleChangeButton, handleChangeTask, getWeek } = this;
-
+    const { weekRestrictionHandler, handleChange, handleChangeButton, handleChangeTask, getWeek, deleteHandler, userCheckboxHandler } = this;
 
     return (
       <div className="App">
@@ -198,8 +350,8 @@ class App extends React.Component {
           <Route exact path="/" component={LandingScreen} />
           <Route path='/user_login' component={(props) => <LoginScreen user={user} dummyCredential={dummyCredential} handleChange={handleChange} handleChangeButton={handleChangeButton}{...this.props} isAuthed={true} />} />
           <Route path='/admin_login' component={(props) => <LoginScreen user={user} dummyCredential={dummyCredential} handleChange={handleChange} handleChangeButton={handleChangeButton}{...this.props} isAuthed={true} />} />
-          <Route path='/userhome' component={(props) => <UserHome user={user} taskTransaction={taskTransaction} months={months} weeks={weeks} dummyMonthValue={dummyMonthValue} dummyWeekValue={dummyWeekValue} weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek} dummyCredential={dummyCredential} taskObj={taskObj} handleChangeTask={handleChangeTask} handleChangeButton={handleChangeButton} {...this.props} isAuthed={true} />} />
-          <Route path='/adminhome' component={(props) => <AdminLandingPage user={user} taskTransaction={taskTransaction} months={months} weeks={weeks} dummyMonthValue={dummyMonthValue} dummyWeekValue={dummyWeekValue} weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek} {...this.props} isAuthed={true} />} />
+          <Route path='/userhome' component={(props) => <UserHome user={user} taskTransaction={taskTransaction} months={months} weeks={weeks} dummyMonthValue={dummyMonthValue} dummyWeekValue={dummyWeekValue} weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek} dummyCredential={dummyCredential} taskObj={taskObj} handleChangeTask={handleChangeTask} handleChangeButton={handleChangeButton} deleteHandler={deleteHandler} userCheckboxHandler={userCheckboxHandler} {...this.props} isAuthed={true} />} />
+          <Route path='/adminhome' component={(props) => <AdminLandingPage user={user} taskTransaction={taskTransaction} months={months} weeks={weeks} dummyMonthValue={dummyMonthValue} dummyWeekValue={dummyWeekValue} weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek}  {...this.props} isAuthed={true} />} />
         </Router>
       </div>
     );

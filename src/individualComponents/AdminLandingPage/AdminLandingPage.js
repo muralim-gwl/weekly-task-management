@@ -2,6 +2,7 @@ import React from 'react'
 import LogoHeader from '../../commonComponents/LogoHeader/LogoHeader'
 import MonthWeek from '../../commonComponents/MonthWeek/MonthWeek'
 import { withRouter } from 'react-router-dom';
+import ChartDisplay from './ChartDisplay'
 
 const AdminLandingPage = ({ user, taskTransaction, months, weeks, dummyMonthValue, dummyWeekValue, weekRestrictionHandler, getWeek }) => {
 
@@ -9,6 +10,8 @@ const AdminLandingPage = ({ user, taskTransaction, months, weeks, dummyMonthValu
         <div>
             <LogoHeader />
             <MonthWeek months={months} weeks={weeks} dummyMonthValue={dummyMonthValue} dummyWeekValue={dummyWeekValue} weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek} />
+
+            <ChartDisplay />
             {
                 user.map((element, index) => {
                     return (
@@ -22,7 +25,10 @@ const AdminLandingPage = ({ user, taskTransaction, months, weeks, dummyMonthValu
                                                     (dummyMonthValue === elTask.monthName && dummyWeekValue === elTask.weekName) ?
 
                                                         <p>{element.id === elTask.userid ?
-                                                            <p style={{ background: 'dodgerBlue', color: 'white' }}>{elTask.taskName} {elTask.taskPoint}points <input style={{ background: 'green', width: '10px', height: '10px' }}></input></p>
+                                                            <p style={{ background: 'dodgerBlue', color: 'white' }}>
+                                                            {elTask.taskName+': '} 
+                                                            points:{elTask.taskPoint} 
+                                                            <textarea disabled style={{ background: elTask.taskColor, width: '20px', height: '20px' }}> </textarea></p>
                                                             : null}
 
                                                         </p> : null}
