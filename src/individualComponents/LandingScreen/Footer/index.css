@@ -1,0 +1,15 @@
+.footer{
+    display:flex;
+    justify-content: space-between
+}
+.left{
+    height: 20px;
+    width: 10px;
+   
+
+}
+.right-footer{
+    margin-top: 50px;
+    
+
+}
