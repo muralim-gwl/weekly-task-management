@@ -10,8 +10,7 @@ import * as Highcharts from "highcharts";
 class App extends React.Component {
   state = {
     dummyCredential: {
-import React from 'react';
-username: '',
+      username: '',
       password: ''
     },
     user: [{
