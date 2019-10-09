@@ -28,7 +28,7 @@ const Login = ({ user, dummyCredential, handleChange, history }) => {
           handleChange(e.target.value, "username");
         }}
         value={username}
-        placeholder="User name"
+        placeholder="Username"
       />
       <br />
       <br />

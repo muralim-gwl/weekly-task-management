@@ -273,7 +273,7 @@ class App extends React.Component {
   weekRestrictionHandler = (e) => {
     let { dummyMonthValue, weeks = [] } = this.state
     dummyMonthValue = e.target.value
-    if (dummyMonthValue == "February") {
+    if (dummyMonthValue === "February") {
       weeks = ['Week: 1', 'Week: 2', 'Week: 3', 'Week: 4']
     } else {
       weeks = ['Week: 1', 'Week: 2', 'Week: 3', 'Week: 4', 'Week: 5']
@@ -341,17 +341,33 @@ class App extends React.Component {
     })
   }
   render() {
-    const { user, taskTransaction, months, weeks, dummyMonthValue, dummyWeekValue, dummyCredential = {}, taskObj = {} } = this.state;
-    const { weekRestrictionHandler, handleChange, handleChangeButton, handleChangeTask, getWeek, deleteHandler, userCheckboxHandler } = this;
+    const { user, taskTransaction, months, weeks, dummyMonthValue, dummyWeekValue,
+            dummyCredential = {}, taskObj = {} } = this.state;
+    const { weekRestrictionHandler, handleChange, handleChangeButton, handleChangeTask,
+            getWeek, deleteHandler, userCheckboxHandler } = this;
 
     return (
       <div className="App">
         <Router>
           <Route exact path="/" component={LandingScreen} />
-          <Route path='/user_login' component={(props) => <LoginScreen user={user} dummyCredential={dummyCredential} handleChange={handleChange} handleChangeButton={handleChangeButton}{...this.props} isAuthed={true} />} />
-          <Route path='/admin_login' component={(props) => <LoginScreen user={user} dummyCredential={dummyCredential} handleChange={handleChange} handleChangeButton={handleChangeButton}{...this.props} isAuthed={true} />} />
-          <Route path='/userhome' component={(props) => <UserHome user={user} taskTransaction={taskTransaction} months={months} weeks={weeks} dummyMonthValue={dummyMonthValue} dummyWeekValue={dummyWeekValue} weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek} dummyCredential={dummyCredential} taskObj={taskObj} handleChangeTask={handleChangeTask} handleChangeButton={handleChangeButton} deleteHandler={deleteHandler} userCheckboxHandler={userCheckboxHandler} {...this.props} isAuthed={true} />} />
-          <Route path='/adminhome' component={(props) => <AdminLandingPage user={user} taskTransaction={taskTransaction} months={months} weeks={weeks} dummyMonthValue={dummyMonthValue} dummyWeekValue={dummyWeekValue} weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek}  {...this.props} isAuthed={true} />} />
+          <Route path='/user_login' component={(props) => <LoginScreen user={user} 
+                  dummyCredential={dummyCredential} handleChange={handleChange} 
+                  handleChangeButton={handleChangeButton}{...this.props} isAuthed={true} />} />
+          <Route path='/admin_login' component={(props) => <LoginScreen user={user}
+                  dummyCredential={dummyCredential} handleChange={handleChange} 
+                  handleChangeButton={handleChangeButton}{...this.props} isAuthed={true} />} />
+          <Route path='/userhome' component={(props) => <UserHome user={user} 
+                  taskTransaction={taskTransaction} months={months} weeks={weeks} 
+                  dummyMonthValue={dummyMonthValue} dummyWeekValue={dummyWeekValue}
+                  weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek} 
+                  dummyCredential={dummyCredential} taskObj={taskObj} handleChangeTask={handleChangeTask}
+                  handleChangeButton={handleChangeButton} deleteHandler={deleteHandler} 
+                  userCheckboxHandler={userCheckboxHandler} {...this.props} isAuthed={true} />} />
+          <Route path='/adminhome' component={(props) => <AdminLandingPage user={user} 
+                  taskTransaction={taskTransaction} months={months} weeks={weeks}
+                  dummyMonthValue={dummyMonthValue} dummyWeekValue={dummyWeekValue}
+                  weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek} 
+                   {...this.props} isAuthed={true} />} />
         </Router>
       </div>
     );

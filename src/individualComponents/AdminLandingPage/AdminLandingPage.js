@@ -16,7 +16,7 @@ const AdminLandingPage = ({ user, taskTransaction, months, weeks, dummyMonthValu
                 user.map((element, index) => {
                     return (
                         <div>
-                            {element.type == 'user' ?
+                            {element.type === 'user' ?
                                 <ol>{element.name}
                                     {taskTransaction.map((elTask, index) => {
                                         return (
