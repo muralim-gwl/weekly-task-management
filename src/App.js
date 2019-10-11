@@ -58,7 +58,7 @@ class App extends React.Component {
       tid: 1,
       userid: 1,
       monthName: 'February',
-      weekName: 'Week: 1',
+      weekName: 'Week 1',
       taskName: 'Task Name 1',
       taskPoint: 2,
       taskStatus: false,
@@ -70,7 +70,7 @@ class App extends React.Component {
       tid: 1,
       userid: 1,
       monthName: 'September',
-      weekName: 'Week: 2',
+      weekName: 'Week 2',
       taskName: 'Task Name 1',
       taskPoint: 2,
       taskStatus: false,
@@ -81,7 +81,7 @@ class App extends React.Component {
       tid: 2,
       userid: 1,
       monthName: 'September',
-      weekName: 'Week: 1',
+      weekName: 'Week 1',
       taskName: 'Task Name 1',
       taskPoint: 4,
       taskStatus: false,
@@ -92,7 +92,7 @@ class App extends React.Component {
       tid: 2,
       userid: 1,
       monthName: 'September',
-      weekName: 'Week: 1',
+      weekName: 'Week 1',
       taskName: 'Task Name 2',
       taskPoint: 4,
       taskStatus: false,
@@ -103,7 +103,7 @@ class App extends React.Component {
       tid: 1,
       userid: 2,
       monthName: 'September',
-      weekName: 'Week: 1',
+      weekName: 'Week 1',
       taskName: 'Task Name 1',
       taskPoint: 8,
       taskStatus: false,
@@ -114,7 +114,7 @@ class App extends React.Component {
       tid: 1,
       userid: 4,
       monthName: 'September',
-      weekName: 'Week: 1',
+      weekName: 'Week 1',
       taskName: 'Task Name 1',
       taskPoint: 8,
       taskStatus: false,
@@ -125,7 +125,7 @@ class App extends React.Component {
       tid: 1,
       userid: 4,
       monthName: 'September',
-      weekName: 'Week: 2',
+      weekName: 'Week 2',
       taskName: 'Task Name 1',
       taskPoint: 8,
       taskStatus: false,
@@ -136,7 +136,7 @@ class App extends React.Component {
       tid: 1,
       userid: 4,
       monthName: 'September',
-      weekName: 'Week: 2',
+      weekName: 'Week 2',
       taskName: 'Task Name 1',
       taskPoint: 4,
       taskStatus: false,
@@ -147,7 +147,7 @@ class App extends React.Component {
       tid: 1,
       userid: 1,
       monthName: 'February',
-      weekName: 'Week: 1',
+      weekName: 'Week 1',
       taskName: 'Task Name 1',
       taskPoint: 2,
       taskStatus: false,
@@ -187,7 +187,7 @@ class App extends React.Component {
       if (currentMonth === el.substr(0, 3))
         dummyMonthValue = el
     })
-    dummyWeekValue = 'Week: ' + currentWeek
+    dummyWeekValue = 'Week ' + currentWeek
     weeks[0] = dummyWeekValue
 
     this.setState({
@@ -262,6 +262,11 @@ class App extends React.Component {
     });
   };
 
+
+
+
+
+
   handleChange = (value, key) => {
     const { dummyCredential } = this.state;
     this.setState({
@@ -273,10 +278,10 @@ class App extends React.Component {
   weekRestrictionHandler = (e) => {
     let { dummyMonthValue, weeks = [] } = this.state
     dummyMonthValue = e.target.value
-    if (dummyMonthValue == "February") {
-      weeks = ['Week: 1', 'Week: 2', 'Week: 3', 'Week: 4']
+    if (dummyMonthValue === "February") {
+      weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4']
     } else {
-      weeks = ['Week: 1', 'Week: 2', 'Week: 3', 'Week: 4', 'Week: 5']
+      weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5']
     }
     this.setState({
       dummyMonthValue,
@@ -341,21 +346,36 @@ class App extends React.Component {
     })
   }
   render() {
-    const { user, taskTransaction, months, weeks, dummyMonthValue, dummyWeekValue, dummyCredential = {}, taskObj = {} } = this.state;
-    const { weekRestrictionHandler, handleChange, handleChangeButton, handleChangeTask, getWeek, deleteHandler, userCheckboxHandler } = this;
+    const { user, taskTransaction, months, weeks, dummyMonthValue, dummyWeekValue,
+            dummyCredential = {}, taskObj = {} } = this.state;
+    const { weekRestrictionHandler, handleChange, handleChangeButton, handleChangeTask,
+            getWeek, deleteHandler, userCheckboxHandler } = this;
 
     return (
       <div className="App">
         <Router>
           <Route exact path="/" component={LandingScreen} />
-          <Route path='/user_login' component={(props) => <LoginScreen user={user} dummyCredential={dummyCredential} handleChange={handleChange} handleChangeButton={handleChangeButton}{...this.props} isAuthed={true} />} />
-          <Route path='/admin_login' component={(props) => <LoginScreen user={user} dummyCredential={dummyCredential} handleChange={handleChange} handleChangeButton={handleChangeButton}{...this.props} isAuthed={true} />} />
-          <Route path='/userhome' component={(props) => <UserHome user={user} taskTransaction={taskTransaction} months={months} weeks={weeks} dummyMonthValue={dummyMonthValue} dummyWeekValue={dummyWeekValue} weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek} dummyCredential={dummyCredential} taskObj={taskObj} handleChangeTask={handleChangeTask} handleChangeButton={handleChangeButton} deleteHandler={deleteHandler} userCheckboxHandler={userCheckboxHandler} {...this.props} isAuthed={true} />} />
-          <Route path='/adminhome' component={(props) => <AdminLandingPage user={user} taskTransaction={taskTransaction} months={months} weeks={weeks} dummyMonthValue={dummyMonthValue} dummyWeekValue={dummyWeekValue} weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek}  {...this.props} isAuthed={true} />} />
+          <Route path='/user_login' component={(props) => <LoginScreen user={user} 
+                  dummyCredential={dummyCredential} handleChange={handleChange} 
+                  handleChangeButton={handleChangeButton}{...this.props} isAuthed={true} />} />
+          <Route path='/admin_login' component={(props) => <LoginScreen user={user}
+                  dummyCredential={dummyCredential} handleChange={handleChange} 
+                  handleChangeButton={handleChangeButton}{...this.props} isAuthed={true} />} />
+          <Route path='/userhome' component={(props) => <UserHome user={user} 
+                  taskTransaction={taskTransaction} months={months} weeks={weeks} 
+                  dummyMonthValue={dummyMonthValue} dummyWeekValue={dummyWeekValue}
+                  weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek} 
+                  dummyCredential={dummyCredential} taskObj={taskObj} handleChangeTask={handleChangeTask}
+                  handleChangeButton={handleChangeButton} deleteHandler={deleteHandler} 
+                  userCheckboxHandler={userCheckboxHandler} {...this.props} isAuthed={true} />} />
+          <Route path='/adminhome' component={(props) => <AdminLandingPage user={user} 
+                  taskTransaction={taskTransaction} months={months} weeks={weeks}
+                  dummyMonthValue={dummyMonthValue} dummyWeekValue={dummyWeekValue}
+                  weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek} 
+                   {...this.props} isAuthed={true} />} />
         </Router>
       </div>
     );
   }
 }
-
 export default App;
