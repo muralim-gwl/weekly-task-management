@@ -1,17 +1,18 @@
 import React from 'react'
 import './MonthWeek.css'
 
-const MonthWeek =({months, weeks, dummyMonthValue, dummyWeekValue,weekRestrictionHandler,getWeek})=> {
-console.log(dummyWeekValue)
+const MonthWeek =({months, weeks, selectedMonth, selectedWeek,weekRestrictionHandler,getWeek})=> {
+    
+
         return (
             <div className='month-display'>
                 <form>
                     <label>Month:</label>
-                    <select value={dummyMonthValue} onChange={weekRestrictionHandler}>
+                    <select value={selectedMonth} onChange={weekRestrictionHandler}>
                         {months.map(el => <option value={el} >{el}</option>)}
                     </select>
                     <label>Weeks:</label>
-                    <select value={dummyWeekValue} onChange={getWeek}>
+                    <select value={selectedWeek} onChange={getWeek}>
                         {weeks.map(el => <option value={el} >{el}</option>)}
                     </select>
                 </form>
