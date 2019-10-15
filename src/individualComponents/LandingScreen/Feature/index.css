@@ -1,0 +1,13 @@
+.feature{
+    background:palegreen;
+    color: white;
+    margin: 18px;
+    display: flex;
+    padding: 80px;
+    font-size:18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 50px;
+    
+}
+
