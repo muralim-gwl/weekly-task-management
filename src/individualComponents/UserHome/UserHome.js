@@ -20,8 +20,17 @@ class UserHome extends React.Component{
     
      //API CALLS
          
+    nestapi (taskId,index, type){
+        Promise.all([this.DeleteTask (taskId,index, type)])
+       .then(() => {
+           return this.GetTasks()
+       })
+    }
+
+
          DeleteTask =(taskId,index, type) =>
             {
+         debugger;
                 const { tasklist = [] } = this.state
                 console.log(index,"inputindex")
                 let baseurl;
@@ -35,26 +44,20 @@ class UserHome extends React.Component{
                 debugger;
                 axios.put(baseurl)
             .then(function (response){
-     
+     debugger;
               console.log(response.data.status,"ucvsdjcvdkjkjvv");
              if(response.data.status === "successfull"){
                  tasklist[index].status = false;
                  console.log(tasklist,"AfterUpdate")
-                 window.location.reload(false);
-     
-             }
-     
-             this.setState({
-                 ...tasklist,
-                 tasklist
-             })
-     
+                  
+             }   
      
             })
             .catch(function(error){
               console.log(error);
             });
      
+
             }
 
  GetTasks =() =>
@@ -62,6 +65,7 @@ class UserHome extends React.Component{
           const { setTasks } = this;
           axios.post("http://localhost:8080/api/user_task_list",this.state.data)
       .then(function (response){
+          debugger;
         setTasks (response.data.response);
       })
       .catch(function(error){
@@ -134,10 +138,24 @@ class UserHome extends React.Component{
         this.setState({ tasklist });
     }
     render(){
+
        
         const { months,weeks,selectedMonth,selectedWeek,weekRestrictionHandler,getWeek}=this.props;
         const {tasklist}=this.state;
-        const {handleChange, TaskhandleChangeButton} = this;      
+        const {handleChange, TaskhandleChangeButton} = this;    
+       
+       
+       const UserUi =  tasklist.map((data, index) => (
+                         
+                                    ( data.status)?
+                                    (<p>{data.task_name}
+                                         <input type="checkbox" onChange={() => this.DeleteTask(data.task_id, index,"checkbox")}></input>
+                                         <button value={data.task_id} onClick={() => this.nestapi(data.task_id, index,"button")}>delete</button>
+                                     </p>) 
+                                     : null
+        
+                                 
+                             ))
 
         // console.log("props", this.props)
         // console.log("state",this.state)
@@ -150,18 +168,8 @@ class UserHome extends React.Component{
                 weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek} />
                 <AddTaskScreen handleChange = {handleChange} TaskhandleChangeButton = {TaskhandleChangeButton} />
 
-
-                     {tasklist.map((data, index) => (
-                         
-                            ( data.status)?
-                            (<p>{data.task_name}
-                                 <input type="checkbox" onChange={() => this.DeleteTask(data.task_id, index,"checkbox")}></input>
-                                 <button value={data.task_id} onClick={() => this.DeleteTask(data.task_id, index,"button")}>delete</button>
-                             </p>) 
-                             : null
-
-                         
-                     ))}
+{UserUi}
+                   
              
             </div>
         </div>
