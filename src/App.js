@@ -16,6 +16,7 @@ class App extends React.Component {
   }
   initialCalc = () => {
     let { months, selectedMonth, selectedWeek,weeks } = this.state
+
     let currentMonth = new Date().toString().substr(4, 3)
     let currentWeek = Math.ceil((new Date().getDate()) / 7)
     months.forEach(el => {
@@ -23,13 +24,20 @@ class App extends React.Component {
         selectedMonth = el
     })
     selectedWeek = 'Week ' + currentWeek
-    weeks[0] = selectedWeek
+    // weeks[0] = selectedWeek
+    if (selectedMonth === "February") {
+      weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4']
+    } else {
+      weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5']
+    }
 
     this.setState({
       selectedMonth,
       selectedWeek,
       weeks
     })
+
+    console.log(months, weeks, selectedMonth, selectedWeek,"112233333333")
   }
   weekRestrictionHandler = (e) => {
     let { selectedMonth, weeks = [] } = this.state

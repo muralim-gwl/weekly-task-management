@@ -3,7 +3,8 @@ import './MonthWeek.css'
 
 const MonthWeek =({months, weeks, selectedMonth, selectedWeek,weekRestrictionHandler,getWeek})=> {
     
-
+  console.log(months, "total months")
+  console.log(weeks,"total weeks")
         return (
             <div className='month-display'>
                 <form>
