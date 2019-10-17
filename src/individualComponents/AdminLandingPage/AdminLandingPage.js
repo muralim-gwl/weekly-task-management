@@ -3,6 +3,8 @@ import MonthWeek from '../../commonComponents/MonthWeek/MonthWeek'
 import ChartDisplay from './ChartDisplay'
 import axios from 'axios'
 import * as Highcharts from "highcharts";
+import LogoHeader from '../../commonComponents/LogoHeader/LogoHeader'
+
 
 class AdminLandingPage extends React.Component {
   state = {
@@ -137,7 +139,7 @@ class AdminLandingPage extends React.Component {
       <div>
         <div className="admin-home">
           <div >
-
+            <LogoHeader/>
             <MonthWeek months={months} weeks={weeks} selectedMonth={selectedMonth} selectedWeek={selectedWeek}
               weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek} />
                <ChartDisplay />
