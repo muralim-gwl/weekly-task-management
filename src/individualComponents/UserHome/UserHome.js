@@ -19,10 +19,11 @@ class UserHome extends React.Component {
     },
   }
 
-  //API CALLS
-
+  
+//checkBox + delete api calling
   DeleteTask = (taskId, index, type) => {
     const { tasklist = [] } = this.state
+    const {GetTasks}=this;
     console.log(index, "inputindex")
     let baseurl;
     if (type == "button") {
@@ -40,6 +41,7 @@ class UserHome extends React.Component {
         if (response.data.status === "successfull") {
           tasklist[index].status = false;
           console.log(tasklist, "AfterUpdate")
+          GetTasks();
          
         }
         this.setState({
@@ -52,7 +54,7 @@ class UserHome extends React.Component {
       });
 
   }
-
+//geting task for particular user 
  GetTasks = () => {
     const { setTasks } = this;
     axios.post("http://localhost:8080/api/user_task_list", this.state.data)
@@ -65,14 +67,15 @@ class UserHome extends React.Component {
   }
 
 
-
+//setting task in state
   setTasks = tasklist => {
     this.setState({ tasklist });
   }
 
-
+//addition of task for particular user api
   PostTask = () => {
     const { addTask, data } = this.state;
+    const {GetTasks}=this;
     console.log(addTask, "jbecfhjs")
     axios.post("http://localhost:8080/api/addtask", {
 
@@ -86,7 +89,7 @@ class UserHome extends React.Component {
     })
       .then(function (response) {
         console.log(response, "Added Task");
-        window.location.reload(false);
+        GetTasks();
 
       })
       .catch(function (error) {
@@ -112,18 +115,19 @@ class UserHome extends React.Component {
 
     this.PostTask();
   }
-
+  //setting current month and week for the current user 
   componentWillMount() {
     const { selectedMonth, selectedWeek } = this.props;
     const { data } = this.state;
     data.month = selectedMonth;
     data.week = selectedWeek;
   }
-
+//calling getTask appi
   componentDidMount() {
     this.GetTasks()
 
   }
+  //setting the response in state 
   setTasks = tasklist => {
     this.setState({ tasklist });
   }
