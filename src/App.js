@@ -23,8 +23,13 @@ class App extends React.Component {
         selectedMonth = el
     })
     selectedWeek = 'Week ' + currentWeek
-    weeks[0] = selectedWeek
+    // weeks[0] = selectedWeek
 
+    if (selectedMonth === "February") {
+      weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4']
+    } else {
+      weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5']
+    }
     this.setState({
       selectedMonth,
       selectedWeek,
