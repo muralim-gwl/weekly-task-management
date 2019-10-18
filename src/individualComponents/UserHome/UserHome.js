@@ -13,7 +13,7 @@ class UserHome extends React.Component {
     },
 
     data: {
-      "user_id": "1",
+      "uuid": "1",
       "month": null,
       "week": null
     },
@@ -22,7 +22,7 @@ class UserHome extends React.Component {
   
 //checkBox + delete api calling
   DeleteTask = (taskId, index, type) => {
-    const { tasklist = [] } = this.state
+    const { tasklist = [],addTask } = this.state
     const {GetTasks}=this;
     console.log(index, "inputindex")
     let baseurl;
@@ -41,12 +41,11 @@ class UserHome extends React.Component {
         if (response.data.status === "successfull") {
           tasklist[index].status = false;
           console.log(tasklist, "AfterUpdate")
-          GetTasks();
-         
+          GetTasks();         
         }
         this.setState({
           ...tasklist,
-          tasklist
+          tasklist,
         })
       })
       .catch(function (error) {
@@ -69,6 +68,7 @@ class UserHome extends React.Component {
 
 //setting task in state
   setTasks = tasklist => {
+    const {addTask}=this;
     this.setState({ tasklist });
   }
 
@@ -79,8 +79,7 @@ class UserHome extends React.Component {
     console.log(addTask, "jbecfhjs")
     axios.post("http://localhost:8080/api/addtask", {
 
-      "user_id": "1",
-      "task_id": "18",
+      "uuid": "1",
       "task_name": addTask.Topic,
       "points": addTask.Points,
       "month": data.month,

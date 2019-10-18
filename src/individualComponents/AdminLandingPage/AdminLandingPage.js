@@ -113,7 +113,7 @@ class AdminLandingPage extends React.Component {
     series[0].data = []
     chartPoint.forEach((userElement) => {
         let pt =parseInt( userElement.sum);
-        let id=userElement.user_id
+        let id=userElement.uuid
         let temp = [];
         temp = [id, pt];        
         series[0].data.push(temp);
@@ -144,7 +144,7 @@ class AdminLandingPage extends React.Component {
               weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek} />
                <ChartDisplay />
             {tasklist.map((data, index) => (
-              <p>{data.user_id} &nbsp; {data.task_name}  &nbsp; {data.points}</p>
+              <p>{data.uuid} &nbsp; {data.task_name}  &nbsp; {data.points}</p>
             ))}
 
           </div>
