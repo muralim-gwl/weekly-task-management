@@ -1,4 +1,4 @@
-.Header{
+/* .Header{
     display:flex;
     justify-content: space-between;
    
@@ -23,3 +23,9 @@
     text-decoration:underline;
     margin-left: 50px;
 }
+.root{
+    flex-grow:1;
+}
+.grow{
+    flex-grow: 1;
+} */

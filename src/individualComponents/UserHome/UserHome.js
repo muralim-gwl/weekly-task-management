@@ -3,6 +3,8 @@ import MonthWeek from '../../commonComponents/MonthWeek/MonthWeek'
 import axios from 'axios'
 import AddTaskScreen from '../AddTaskScreen/AddTaskScreen'
 import LogoHeader from '../../commonComponents/LogoHeader/LogoHeader'
+import Checkbox from '@material-ui/core/Checkbox';
+
 
 class UserHome extends React.Component {
   state = {
@@ -22,14 +24,15 @@ class UserHome extends React.Component {
   
 //checkBox + delete api calling
   DeleteTask = (taskId, index, type) => {
-    const { tasklist = [],addTask } = this.state
+    const { tasklist = []} = this.state
+
     const {GetTasks}=this;
     console.log(index, "inputindex")
     let baseurl;
     if (type == "button") {
-      baseurl = "http://localhost:8080/api/delete/";
+      baseurl = "https://still-river-36033.herokuapp.com/api/delete/";
     } else {
-      baseurl = "http://localhost:8080/api/updatetaskstatus/";
+      baseurl = "https://still-river-36033.herokuapp.com/api/updatetaskstatus/";
     }
     baseurl = baseurl + taskId;
     console.log(index)
@@ -56,7 +59,7 @@ class UserHome extends React.Component {
 //geting task for particular user 
  GetTasks = () => {
     const { setTasks } = this;
-    axios.post("http://localhost:8080/api/user_task_list", this.state.data)
+    axios.post("https://still-river-36033.herokuapp.com/api/user_task_list", this.state.data)
       .then(function (response) {
         setTasks(response.data.response);
       })
@@ -67,9 +70,8 @@ class UserHome extends React.Component {
 
 
 //setting task in state
-  setTasks = tasklist => {
-    const {addTask}=this;
-    this.setState({ tasklist });
+  setTasks = (tasklist) => {
+    this.setState({ tasklist});
   }
 
 //addition of task for particular user api
@@ -77,7 +79,7 @@ class UserHome extends React.Component {
     const { addTask, data } = this.state;
     const {GetTasks}=this;
     console.log(addTask, "jbecfhjs")
-    axios.post("http://localhost:8080/api/addtask", {
+    axios.post("https://still-river-36033.herokuapp.com/api/addtask", {
 
       "uuid": "1",
       "task_name": addTask.Topic,
