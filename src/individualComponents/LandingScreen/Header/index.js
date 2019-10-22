@@ -11,6 +11,7 @@ class Header extends React.Component {
    render(){
        return(
     <div style={{flexGrow:1}}>
+      
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" color="inherit" style={{flexGrow:"1",float:"left", textAlign:"left"}}  >

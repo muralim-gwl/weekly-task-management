@@ -13,32 +13,23 @@ class LandingScreen extends React.Component {
     render() {
         const { history } = this.props;
         return (
-            <React.Fragment >
-                <Grid container direction="column" alignContent="stretch">
-                    <Header history={history}/>
-                </Grid>
-                {/* <Grid container direction="column" justify="center" alignContent="stretch">
-                    <Banner/>
-                </Grid> */}
-                <Grid container direction="column"  alignContent="stretch">
+                 
+                <React.Fragment  >
+                <Grid container>
+                   
+                    <Header history={history}/>          
+                   
                     <Feature />
-                </Grid>
-                <Grid container direction="column" alignContent="stretch">
-                    <Footer/>
+                
+                    <Grid item md={12}>
+                    <Footer/></Grid>
                 </Grid>
                 </React.Fragment>
-            // <div className="landing-screen">
-            //     <div className="head-bann">
-            //         <Header history={history} />
-            //         <Banner />
-            //     </div>
-            //     <div className="feat-foot">
-            //         <Feature />
-            //         <Footer />
-            //     </div>
-            // </div>
         )
     }
 }
 
 export default LandingScreen;
+ {/* <Grid container direction="column" justify="center" alignContent="stretch">
+                    <Banner/>
+                </Grid> */}

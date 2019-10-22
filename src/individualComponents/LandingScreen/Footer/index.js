@@ -8,14 +8,14 @@ class Footer extends React.Component{
     render()
     {
         return (
-            <Grid component="main"  container >
-                <CssBaseline/>
-                        <Grid item xs={false} sm={4} md={6}   style={{backgroundColor:"#64b5f6"}}>
+            <Grid  container >
+               
+                        <Grid item   md={6}   style={{backgroundColor:"#64b5f6"}}>
                            
                             <img  src="foot.png"></img>
                            
                         </Grid>
-                        <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square   style={{backgroundColor:"#64b5f6"}} >
+                        <Grid item md={6}   style={{backgroundColor:"#64b5f6"}} >
                             
                                 ADDRESS: Plot No. 72 & 73,4th Floor, Akshay Tech Park,
                                  EPIP Zone, Whitefield, Bengaluru, Karnataka 560066
