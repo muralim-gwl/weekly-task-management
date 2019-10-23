@@ -60,7 +60,7 @@ class AdminLandingPage extends React.Component {
   
   GetTasks = () => {
     const { setTasks } = this;
-    axios.post("http://localhost:8080/api/admin_view_task_list",this.state.data)
+    axios.post("https://still-river-36033.herokuapp.com/api/admin_view_task_list",this.state.data)
       .then(function (response) {
         setTasks(response.data.response);
       })
@@ -75,7 +75,7 @@ class AdminLandingPage extends React.Component {
   GetChart = () => {
     console.log("chatapi is calling")
     const { setChart } = this;
-    axios.post("http://localhost:8080/api/get_chart_points",this.state.data)
+    axios.post("https://still-river-36033.herokuapp.com/api/get_chart_points",this.state.data)
       .then(function (response) {
          console.log(response.data.response,"123123123")
         setChart(response.data.response);
