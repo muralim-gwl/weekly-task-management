@@ -60,7 +60,7 @@ class AdminLandingPage extends React.Component {
   
   GetTasks = () => {
     const { setTasks } = this;
-    axios.post("http://localhost:8080/api/admin_view_task_list",this.state.data)
+    axios.post("https://still-river-36033.herokuapp.com/api/admin_view_task_list",this.state.data)
       .then(function (response) {
         setTasks(response.data.response);
       })
@@ -75,7 +75,7 @@ class AdminLandingPage extends React.Component {
   GetChart = () => {
     console.log("chatapi is calling")
     const { setChart } = this;
-    axios.post("http://localhost:8080/api/get_chart_points",this.state.data)
+    axios.post("https://still-river-36033.herokuapp.com/api/get_chart_points",this.state.data)
       .then(function (response) {
          console.log(response.data.response,"123123123")
         setChart(response.data.response);
@@ -113,7 +113,7 @@ class AdminLandingPage extends React.Component {
     series[0].data = []
     chartPoint.forEach((userElement) => {
         let pt =parseInt( userElement.sum);
-        let id=userElement.user_id
+        let id=userElement.uuid
         let temp = [];
         temp = [id, pt];        
         series[0].data.push(temp);
@@ -144,7 +144,7 @@ class AdminLandingPage extends React.Component {
               weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek} />
                <ChartDisplay />
             {tasklist.map((data, index) => (
-              <p>{data.user_id} &nbsp; {data.task_name}  &nbsp; {data.points}</p>
+              <p>{data.uuid} &nbsp; {data.task_name}  &nbsp; {data.points}</p>
             ))}
 
           </div>
