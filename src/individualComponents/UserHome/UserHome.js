@@ -16,7 +16,13 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Tooltip from "@material-ui/core/Tooltip";
-
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { Select } from '@material-ui/core';
 
 
 //# Table Functions
@@ -98,6 +104,8 @@ class UserHome extends React.Component {
       Topic: null,
       Points: null
     },
+    open:false,
+    setOpen:false,
 
     data: {
       "uuid": "1",
@@ -195,10 +203,26 @@ class UserHome extends React.Component {
     });
   };
 
+  handleClose = () => {
+    this.setState({
+      setOpen :false,
+      open:false,
+         });
+    };
+
+    handleClickOpen = () => {
+      // const {setOpen,open}=this.state
+      this.setState({
+        setOpen :true,
+        open:true
+      });
+    };
+
   TaskhandleChangeButton = () => {
     const { addTask } = this.state;
 
     this.PostTask();
+    this.handleClose();
   }
   //setting current month and week for the current user 
   componentWillMount() {
@@ -219,8 +243,8 @@ class UserHome extends React.Component {
   render() {
 
     const { months, weeks, selectedMonth, selectedWeek, weekRestrictionHandler, getWeek } = this.props;
-    const { tasklist } = this.state;
-    const { handleChange, TaskhandleChangeButton } = this;
+    const { tasklist,open } = this.state;
+    const { handleChange, TaskhandleChangeButton ,handleClose,handleClickOpen} = this;
     const { classes } = this.props;
     const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
     const emptyRows =
@@ -238,8 +262,60 @@ class UserHome extends React.Component {
           </div>
           <div> <MonthWeek months={months} weeks={weeks} selectedMonth={selectedMonth} selectedWeek={selectedWeek}
             weekRestrictionHandler={weekRestrictionHandler} getWeek={getWeek} /></div>
-          {/* <div> <AddTaskScreen handleChange={handleChange} TaskhandleChangeButton={TaskhandleChangeButton} /></div> */}
-        
+            <br/>
+         <Button  variant="outlined" color="primary" onClick={handleClickOpen} >
+               Add Task
+         </Button>
+
+<br/>
+{/* DialugeUI */}
+
+<div>
+         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+         <DialogTitle id="form-dialog-title">New Task</DialogTitle>
+         <DialogContent>
+           <DialogContentText>
+             Add your weekly task here.
+           </DialogContentText>
+           <TextField
+             autoFocus
+             margin="dense"
+             id="name"
+             label="New Task"
+             type="text"
+             fullWidth
+             onChange={e => {
+                     // console.log(e.target.value);
+                     handleChange(e.target.value, "Topic");
+                   }}
+                   placeholder="Topics"
+           />
+           <br></br>
+           <label>Points &nbsp; &nbsp;</label>
+           <Select label="Points"  onChange={e => {
+                 // console.log(e.target.value);
+                 handleChange(e.target.value, "Points");
+               }}
+               placeholder="Points" margin="dense" value={this.state.addTask.Points}>
+                  <option value="2">2</option>
+                   <option value="4">4</option>
+                    <option value="6">6</option>
+                    <option value="8">8</option>
+           </Select>
+         </DialogContent>
+         <DialogActions>
+           <Button onClick={handleClose} color="primary">
+             Cancel
+           </Button>
+           <Button onClick={TaskhandleChangeButton} color="primary ">
+             Add
+           </Button>
+         </DialogActions>
+       </Dialog>
+     </div>
+
+
+         {/* Table UI */}
           <Paper >
         <div >
 
@@ -271,10 +347,10 @@ class UserHome extends React.Component {
                       <TableCell align="left">{data.points}</TableCell>
 
                       <TableCell padding="checkbox">
-                        <Checkbox  />
+                        <Checkbox disabled = {data.task_completion} checked = {data.task_completion} onChange={() => this.DeleteTask(data.task_id, index, "checkbox")}/>
                       </TableCell>
                       <TableCell padding="checkbox">
-                        <Button variant="contained" color="primary">
+                        <Button variant="contained" color="primary" value={data.task_id} onClick={() => this.DeleteTask(data.task_id, index, "button")}>
                           Delete
                         </Button>
                       </TableCell>
