@@ -12,16 +12,14 @@ class Footer extends React.Component{
                
                         <Grid item   md={6}   style={{backgroundColor:"#64b5f6"}}>
                            
-                            <img  src="foot.png"></img>
+                            <img  src="foot.png" ></img>
                            
                         </Grid>
                         <Grid item md={6}   style={{backgroundColor:"#64b5f6"}} >
-                            
-                                ADDRESS: Plot No. 72 & 73,4th Floor, Akshay Tech Park,
-                                 EPIP Zone, Whitefield, Bengaluru, Karnataka 560066
-                                
+                               ADDRESS: Plot No. 72 & 73,4th Floor, Akshay Tech Park,
+                                 EPIP Zone, Whitefield, Bengaluru, Karnataka 560066 </Grid>                              
                          
-                        </Grid>
+
             </Grid>
         )
     }
