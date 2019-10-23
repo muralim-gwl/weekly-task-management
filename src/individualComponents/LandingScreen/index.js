@@ -17,12 +17,14 @@ class LandingScreen extends React.Component {
                 <React.Fragment  >
                 <Grid container>
                    
-                    <Header history={history}/>          
+                    <Header history={history}/>   
+                            
                    
                     <Feature />
                 
-                    <Grid item md={12}>
-                    <Footer/></Grid>
+                    <Banner/>
+                    <Footer/>
+                    
                 </Grid>
                 </React.Fragment>
         )
@@ -30,6 +32,3 @@ class LandingScreen extends React.Component {
 }
 
 export default LandingScreen;
- {/* <Grid container direction="column" justify="center" alignContent="stretch">
-                    <Banner/>
-                </Grid> */}
