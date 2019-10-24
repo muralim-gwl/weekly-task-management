@@ -61,19 +61,19 @@ class Login extends React.Component {
 
       <div style={{ flexGrow: 1 }}>
 
-        <AppBar position="static">
+        {/* <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" color="inherit" style={{ flexGrow: "1", float: "left", textAlign: "left" }}  >
               Weekly Task Management
               </Typography>
           </Toolbar>
-        </AppBar>
+        </AppBar> */}
 
         <Grid container container justify="center" style={{ minHeight: '100vh' }}>
 
           <Grid item xs={false} sm={false} md={6} style={{ backgroundColor: "#64b5f6" }} >
             <Hidden smDown xsDown>
-            <img src="gwlLogo.png" height="50%" alignItems="center " justify="center"></img></Hidden>
+            <img src="gwlLogo.png" height="50%"  style={{alignItems:"center " , justify:"center"}}></img></Hidden>
           </Grid>
           <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: "20px" }}>
