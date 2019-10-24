@@ -1,8 +1,10 @@
 import React from 'react'
+import { Card, Grid, CardActionArea } from "@material-ui/core";
 
 const ChartDisplay = () => {
     return (
-        <div id='container' />
+
+        <Card id='container' />
     )
 }
 
