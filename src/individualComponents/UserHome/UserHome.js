@@ -36,6 +36,7 @@ const rows = [
 ];
 
 
+
 // Table Header
 class EnhancedTableHead extends React.Component {
   createSortHandler = property => event => {
@@ -231,11 +232,28 @@ class UserHome extends React.Component {
     data.month = selectedMonth;
     data.week = selectedWeek;
   }
+validateUser=()=>{
+  const {GetTasks}=this;
+  axios.post("https://evening-dawn-93464.herokuapp.com/api/verify",{
+    "auth_token":sessionStorage.getItem("serverAUTHTOKEN")
+  })
+  .then(function(response) {
+    if(response.data.isloggedIn){
+    GetTasks();
+  }
+
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
 //calling getTask appi
   componentDidMount() {
-    this.GetTasks()
+    this.validateUser()
 
   }
+
+  
   //setting the response in state 
   setTasks = tasklist => {
     this.setState({ tasklist });
@@ -271,7 +289,7 @@ class UserHome extends React.Component {
 {/* DialugeUI */}
 
 <div>
-         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+         <Dialog  open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={'sm'} maxWidth={'sm'} >
          <DialogTitle id="form-dialog-title">New Task</DialogTitle>
          <DialogContent>
            <DialogContentText>

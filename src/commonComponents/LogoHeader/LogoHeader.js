@@ -2,6 +2,7 @@ import React from 'react';
 import './LogoHeader.css'
 import { Link } from 'react-router-dom'
 import { AppBar, Toolbar, Typography, Button } from '@material-ui/core';
+import { classes } from 'istanbul-lib-coverage';
 
 const LogoHeader = () => {
 
@@ -12,10 +13,12 @@ const LogoHeader = () => {
             <Typography variant="h6" color="inherit" style={{ flexGrow: "1", float: "left", textAlign: "left" }}  >
               Weekly Task Management
               </Typography>
-              <Link to='/'>
+             
               <Button variant="contained" color="secondary" style={{textDecoration:'none'}}  >
+              <Link to='/' className={classes.divTag}>
                   Log Out
-              </Button></Link>
+                  </Link>
+              </Button>
           </Toolbar>
         </AppBar>
         {/* <div className='header-class'>
