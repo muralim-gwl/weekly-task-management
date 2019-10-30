@@ -109,7 +109,7 @@ class UserHome extends React.Component {
     setOpen:false,
 
     data: {
-      "uuid": "1",
+      "uuid":sessionStorage.serverUUID,
       "month": null,
       "week": null
     },
@@ -170,11 +170,13 @@ class UserHome extends React.Component {
 //addition of task for particular user api
   PostTask = () => {
     const { addTask, data } = this.state;
+
     const {GetTasks}=this;
     console.log(addTask, "jbecfhjs")
+    debugger;
     axios.post("https://still-river-36033.herokuapp.com/api/addtask", {
 
-      "uuid": "1",
+      "uuid": data.uuid,
       "task_name": addTask.Topic,
       "points": addTask.Points,
       "month": data.month,
@@ -234,6 +236,7 @@ class UserHome extends React.Component {
   }
 validateUser=()=>{
   const {GetTasks}=this;
+ 
   axios.post("https://evening-dawn-93464.herokuapp.com/api/verify",{
     "auth_token":sessionStorage.getItem("serverAUTHTOKEN")
   })

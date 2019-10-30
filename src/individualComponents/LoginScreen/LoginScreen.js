@@ -1,5 +1,5 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'; 
+import { withRouter } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
@@ -12,7 +12,7 @@ import './LoginScreen.css';
 class Login extends React.Component {
 
   state = {
-   
+
     userCredential: {
       username: null,
       password: null
@@ -35,48 +35,53 @@ class Login extends React.Component {
     sessionStorage.setItem('serverAUTHTOKEN', auth);
   }
 
-postLogin = () =>{
-  debugger;
-  const { userCredential } = this.state;
-  const {setHandler}=this;
-  console.log("kjfdvjfjdnvjfjvknfdnvfndfj")
-  axios.post("https://evening-dawn-93464.herokuapp.com/api/login", {
-    "user_name" :userCredential.username,
-    "password": userCredential.password
-  })
-  .then(response=> {
-    setHandler(response.data.all[0],response.data.auth_token)
-     if(this.props.location.pathname == "/admin_login" )
-     {
-      
-      this.props.history.push('/adminhome')
-     }else{
-      this.props.history.push('/userhome')
-     }
-   
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+  postLogin = () => {
+    debugger;
+    const { userCredential } = this.state;
+    const { setHandler } = this;
+    // console.log("kjfdvjfjdnvjfjvknfdnvfndfj")
+    axios.post("https://evening-dawn-93464.herokuapp.com/api/login", {
+      "user_name": userCredential.username,
+      "password": userCredential.password
+    })
+      .then(response => {
+        console.log("response",response.data.login_message)
+        if(response.data.login_message){
+          alert("Invalid username//password")
+        }
+        else{
+        setHandler(response.data.all[0], response.data.auth_token)
+        if (this.props.location.pathname == "/admin_login") {
+
+          this.props.history.push('/adminhome')
+        } else {
+          this.props.history.push('/userhome')
+        }
+      }
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
 
-}
+  }
 
 
 
   handleChangeButton = () => {
     const { userCredential } = this.state;
-const{postLogin} = this;
-    if(userCredential.username){
-      if(userCredential.password){
-          postLogin();
-      }else{
+    const { postLogin } = this;
+    if (userCredential.username) {
+      if (userCredential.password) {
+        postLogin();
+      } else {
 
       }
-    }else{
-      console.log(this.props.location.pathname,"tttthistory")
+    } else {
+      console.log(this.props.location.pathname, "tttthistory")
     }
-   
+
 
   }
 
@@ -92,7 +97,7 @@ const{postLogin} = this;
 
 
 
-<React.Fragment>
+      <React.Fragment>
         <Grid container>
           <AppBar position="static" style={{ background: "#90a4ae" }}>
             <Toolbar>
@@ -107,14 +112,14 @@ const{postLogin} = this;
             </Toolbar>
           </AppBar>
         </Grid>
-        ​
-        <Grid container style={{ marginTop:0 }}>
-        <Hidden smDown xsDown>
-          <Grid
-            item
-            md={7}
-            style={{ background: "#90a4ae", height: "680px", width: "50000px" }}
-          ></Grid>
+
+        <Grid container style={{ marginTop: 0 }}>
+          <Hidden smDown xsDown>
+            <Grid
+              item
+              md={7}
+              style={{ background: "#90a4ae", height: "680px", width: "50000px" }}
+            ></Grid>
           </Hidden>
           <Grid item md={5} classes={{ root: "displaying" }}>
             <Card classes={{ root: "card" }}>
@@ -126,10 +131,11 @@ const{postLogin} = this;
                     label="Name"
                     margin="normal"
                     size="8"
+                    required
                     variant="outlined"
                     value={username}
                     onChange={e => {
-                      handleChange( e.target.value,"username");
+                      handleChange(e.target.value, "username");
                     }}
                   />
                 </Typography>
@@ -139,10 +145,11 @@ const{postLogin} = this;
                     label="Password"
                     type="password"
                     margin="normal"
+                    required
                     size="8"
                     variant="outlined"
                     onChange={e => {
-                      handleChange( e.target.value,"password");
+                      handleChange(e.target.value, "password");
                     }}
                     value={password}
                   />
@@ -161,10 +168,10 @@ const{postLogin} = this;
             </Card>
           </Grid>
 
-        
+
         </Grid>
 
-</React.Fragment>
+      </React.Fragment>
 
 
 
@@ -194,7 +201,7 @@ const{postLogin} = this;
       //     </Grid>
       //     <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square>
       //       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: "20px" }}>
-             
+
       //         <Paper style={{justify:"center"}}>
       //         <Typography component="h1" variant="h5">
       //           Sign in
@@ -231,7 +238,7 @@ const{postLogin} = this;
       //           />
       //          <Button
       //             type="submit"
-                  
+
       //             variant="contained"
       //             color="primary"
       //             onClick={handleChangeButton}>
@@ -239,7 +246,7 @@ const{postLogin} = this;
       //             Sign In
       //           </Button> 
 
-              
+
       //     </Paper>
       //       </div>
       //     </Grid>
