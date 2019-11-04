@@ -36,6 +36,7 @@ const rows = [
 ];
 
 
+
 // Table Header
 class EnhancedTableHead extends React.Component {
   createSortHandler = property => event => {
@@ -108,7 +109,7 @@ class UserHome extends React.Component {
     setOpen:false,
 
     data: {
-      "uuid": "1",
+      "uuid":sessionStorage.serverUUID,
       "month": null,
       "week": null
     },
@@ -169,11 +170,13 @@ class UserHome extends React.Component {
 //addition of task for particular user api
   PostTask = () => {
     const { addTask, data } = this.state;
+
     const {GetTasks}=this;
     console.log(addTask, "jbecfhjs")
+    debugger;
     axios.post("https://still-river-36033.herokuapp.com/api/addtask", {
 
-      "uuid": "1",
+      "uuid": data.uuid,
       "task_name": addTask.Topic,
       "points": addTask.Points,
       "month": data.month,
@@ -231,11 +234,29 @@ class UserHome extends React.Component {
     data.month = selectedMonth;
     data.week = selectedWeek;
   }
+validateUser=()=>{
+  const {GetTasks}=this;
+ 
+  axios.post("https://evening-dawn-93464.herokuapp.com/api/verify",{
+    "auth_token":sessionStorage.getItem("serverAUTHTOKEN")
+  })
+  .then(function(response) {
+    if(response.data.isloggedIn){
+    GetTasks();
+  }
+
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
 //calling getTask appi
   componentDidMount() {
-    this.GetTasks()
+    this.validateUser()
 
   }
+
+  
   //setting the response in state 
   setTasks = tasklist => {
     this.setState({ tasklist });
@@ -271,7 +292,7 @@ class UserHome extends React.Component {
 {/* DialugeUI */}
 
 <div>
-         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+         <Dialog  open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={'sm'} maxWidth={'sm'} >
          <DialogTitle id="form-dialog-title">New Task</DialogTitle>
          <DialogContent>
            <DialogContentText>
