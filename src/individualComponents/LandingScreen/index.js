@@ -20,18 +20,18 @@ class LandingScreen extends React.Component {
                    
                     <Header history={history}/>    
 
+                    <img src="landingscreen.jpg" height="80%" width ="100%"  style={{alignItems:"center " , justify:"center" ,opacity: 0.68}}></img>
 
-
-                    <Card style={{ maxWidth: 500}}>
-      <CardMedia
+{/* 
+                    <Card >
+                 <CardMedia
         style={{ height: 0,
             paddingTop: '56%'}}
-        image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrLz4wJN7m50jHBuEDi5xXqmAhB2Jen7nDiUZj6ZjT7H1jclvd&s"
         title="Paella dish"
       />
      
      
-    </Card>
+    </Card> */}
 
                             
 {/*                    
