@@ -173,7 +173,7 @@ class UserHome extends React.Component {
 
     const {GetTasks}=this;
     console.log(addTask, "jbecfhjs")
-    debugger;
+
     axios.post("https://still-river-36033.herokuapp.com/api/addtask", {
 
       "uuid": data.uuid,
@@ -224,8 +224,14 @@ class UserHome extends React.Component {
   TaskhandleChangeButton = () => {
     const { addTask } = this.state;
 
-    this.PostTask();
-    this.handleClose();
+    if(addTask.Topic&& addTask.Points){
+      this.PostTask();
+      this.handleClose();
+    }else{
+      alert("Please Enter Topic and points")
+    }
+   
+    
   }
   //setting current month and week for the current user 
   componentWillMount() {
@@ -386,7 +392,7 @@ validateUser=()=>{
             </TableBody>
           </Table>
         </div>
-        <TablePagination
+        {/* <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={data.length}
@@ -400,7 +406,7 @@ validateUser=()=>{
           }}
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
-        />
+        /> */}
       </Paper>
         
         
