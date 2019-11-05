@@ -75,24 +75,17 @@ class Login extends React.Component {
   handleChangeButton = () => {
     const { userCredential,flag } = this.state;
     const { postLogin } = this;
-// if(flag){
-//   this.setState({
-//     flag : false
-//   })
-// }
+
   
     if (userCredential.username) {
       if (userCredential.password) {
         postLogin();
       } else {
-        
+        alert ("Enter Password")
       }
     } else {
       
-      this.setState({
-      flag : true 
-      });
-     
+    alert("Enter UserName")
     }
     
 
@@ -182,9 +175,9 @@ class Login extends React.Component {
               </CardContent>
             </Card>
           </Grid>
-          {flag ?
+          {/* {flag ?
          ( <SnackbarMessage  />):null
-          }
+          } */}
         </Grid></div>
 
 
