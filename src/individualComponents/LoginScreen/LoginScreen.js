@@ -1,26 +1,24 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'; import Avatar from '@material-ui/core/Avatar';
+import { withRouter } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Box from '@material-ui/core/Box';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-
 import Grid from '@material-ui/core/Grid';
-import { Hidden } from '@material-ui/core';
+import { Hidden, AppBar, Toolbar, Card, CardContent, Snackbar } from '@material-ui/core';
+import axios from 'axios';
+import './LoginScreen.css';
+import SnackbarMessage from '../../commonComponents/SnackbarMessage'
+
+
 class Login extends React.Component {
 
   state = {
-    defaultCredential: {
-      username: "gwl",
-      password: "gwl@123"
-    },
+    flag: false,
     userCredential: {
       username: null,
-      password: null
+      password: null,
+    
     }
   };
 
@@ -34,23 +32,67 @@ class Login extends React.Component {
       userCredential: { ...userCredential, [key]: value }
     });
   };
+  setHandler = (details, auth) => {
+    sessionStorage.setItem('serverUUID', details.uuid);
+    sessionStorage.setItem('serverUSERNAME', details.user_name);
+    sessionStorage.setItem('serverAUTHTOKEN', auth);
+  }
+
+  postLogin = () => {
+    debugger;
+    const { userCredential } = this.state;
+    const { setHandler } = this;
+    // console.log("kjfdvjfjdnvjfjvknfdnvfndfj")
+    axios.post("https://evening-dawn-93464.herokuapp.com/api/login", {
+      "user_name": userCredential.username,
+      "password": userCredential.password
+    })
+      .then(response => {
+        console.log("response", response.data.login_message)
+        if (response.data.login_message) {
+          alert("Invalid username//password")
+        }
+        else {
+          setHandler(response.data.all[0], response.data.auth_token)
+          if (this.props.location.pathname == "/admin_login") {
+
+            this.props.history.push('/adminhome')
+          } else {
+            this.props.history.push('/userhome')
+          }
+        }
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+
+  }
+
+
 
   handleChangeButton = () => {
-    const { userCredential } = this.state;
-    const { defaultCredential } = this.state;
+    const { userCredential,flag } = this.state;
+    const { postLogin } = this;
 
-    if (defaultCredential.username == userCredential.username && defaultCredential.password == userCredential.password) {
-      this.props.history.push('/userhome')
-
+  
+    if (userCredential.username) {
+      if (userCredential.password) {
+        postLogin();
+      } else {
+        alert ("Enter Password")
+      }
     } else {
-      alert("Please enter valid credientials")
-
+      
+    alert("Enter UserName")
     }
+    
 
   }
 
   render() {
-    const { userCredential = {} } = this.state;
+    const { userCredential = {},flag } = this.state;
     const { username, password } = userCredential;
 
 
@@ -58,167 +100,87 @@ class Login extends React.Component {
     const { handleChange } = this;
     const { handleChangeButton } = this;
     return (
-
       <div style={{ flexGrow: 1 }}>
-
-        {/* <AppBar position="static">
+       
+        <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" color="inherit" style={{ flexGrow: "1", float: "left", textAlign: "left" }}  >
               Weekly Task Management
               </Typography>
           </Toolbar>
-        </AppBar> */}
+        </AppBar>
 
         <Grid container container justify="center" style={{ minHeight: '100vh' }}>
 
           <Grid item xs={false} sm={false} md={6} style={{ backgroundColor: "#64b5f6" }} >
-            <Hidden smDown xsDown>
-            <img src="gwlLogo.png" height="50%"  style={{alignItems:"center " , justify:"center"}}></img></Hidden>
-          </Grid>
-          <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: "20px" }}>
-              <Typography component="h1" variant="h5">
-                Sign in
-              </Typography>
-              <Paper>
-              <form style={{ width: '100%' }} noValidate>
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoFocus
-                  onChange={e => {
-                    // console.log(e.target.value);
-                    handleChange(e.target.value, "username");
-                  }}
-                  value={username}
-                />
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  onChange={e => {
-                    // console.log(e.target.value);
-                    handleChange(e.target.value, "password");
-                  }}
-                />
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  onClick={handleChangeButton}>
 
-                  Sign In
-                </Button>
-              </form></Paper>
-            </div>
           </Grid>
+          <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square classes={{ root: "displaying" }}>
+
+
+            <Card classes={{ root: "card" }}>
+              <CardContent>
+                <Typography component="h1" variant="h5">
+                  Sign in
+              </Typography >
+                <Typography gutterBottom>
+                  <TextField
+
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    size="16"
+                    id="username"
+                    label="UserName"
+                    name="username"
+                    value={username}
+                    autoFocus
+                    onChange={e => {
+                      // console.log(e.target.value);
+                      handleChange(e.target.value, "username");
+                    }}
+                    value={username}
+                  />
+                </Typography><br></br>
+                <Typography gutterBottom>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    size="8"
+                    value={password}
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    onChange={e => {
+                      // console.log(e.target.value);
+                      handleChange(e.target.value, "password");
+                    }}
+                  />
+                </Typography>
+                <br></br>
+                <Typography>
+                  <Button
+                    type="submit"
+
+                    variant="contained"
+                    color="primary"
+                    onClick={handleChangeButton}>
+
+                    Sign In
+                </Button>
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          {/* {flag ?
+         ( <SnackbarMessage  />):null
+          } */}
         </Grid></div>
 
 
-
-
-
-
-
-
-
-
-
-      // <div style={{backgroundColor:"red", height:"100vh"}} >
-
-
-      //   <Grid >
-      //    <Paper style={{backgroundColor:"green",marginLeft:"25%",marginTop:"10%", marginRight:"25%",marginBottom:"10%" }}>
-
-      //       <Typography component ="h1" variant="h5">
-      //         Login In
-      //       </Typography>
-      //       <form noValidate>
-      //         <TextField
-      //         variant="outlined"
-      //         margin="normal"
-      //         required
-      //         fullWidth
-      //         onChange={e => {
-      //           // console.log(e.target.value);
-      //           handleChange(e.target.value, "username");
-      //         }}
-      //         value={username}
-
-      //         label="User Name"
-      //         autoFocus/>
-      //         <TextField
-      //           variant="outlined"
-      //           margin="normal"
-      //           required
-      //           fullWidth
-      //           name="password"
-      //           label="Password"
-      //           type="password"
-      // onChange={e => {
-      //   // console.log(e.target.value);
-      //   handleChange(e.target.value, "password");
-      // }}
-      //           value={password}
-      //         />
-      //       </form>
-      //       <Button variant="contained" color="primary" onClick= {
-      //     handleChangeButton}>
-      //   Login
-      //   </Button>
-      //    </Paper>
-      //    </Grid>
-
-      // </div>
-
-
-
-
-
-      // <div style={{justifyContent:'center', marginTop:'10%'}}>
-      //   Login
-      //   <br />
-      //   <br />
-      //   <input
-      //     onChange={e => {
-      //       // console.log(e.target.value);
-      //       handleChange(e.target.value, "username");
-      //     }}
-      //     value={username}
-      //     placeholder="User name"
-      //   />
-      //   <br />
-      //   <br />
-      //   <input
-      //     onChange={e => {
-      //       // console.log(e.target.value);
-      //       handleChange(e.target.value, "password");
-      //     }}
-      //     value={password}
-      //     type="password"
-      //     placeholder="Password"
-      //   />
-      //   <br />
-      //   <br />
-      //   <Button variant="contained" color="primary" onClick= {
-      //     handleChangeButton}>
-      //   Login
-      //   </Button>
-      //   <br />
-      //   <br />
-      // </div>
     );
   }
 
@@ -226,3 +188,19 @@ class Login extends React.Component {
 }
 
 export default withRouter(Login);
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+

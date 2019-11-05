@@ -89,6 +89,7 @@ const styles = theme => ({
 class AdminLandingPage extends React.Component {
   state = {
     tasklist: [],
+    redirect:false,
     data: {
       "month": null,
       "week": null
@@ -125,15 +126,46 @@ class AdminLandingPage extends React.Component {
     data.week = selectedWeek;
 
   }
-  componentDidMount() {
-    this.GetTasks()
-    this.GetChart();
-    try {
-      this.handleChartLogic()
-      
-    } catch (error) {
-      console.log(error)
+  verifyFromServer = () => {
+    const {redirect}=this.state
+    axios.post("https://evening-dawn-93464.herokuapp.com/api/validate", {
+        "auth_token": sessionStorage.getItem('serverAUTHTOKEN')
+    })
+        .then(response => {
+            let status = response.data.status
+            if (status === 401) {
+                this.setState({ redirect: true })
+            }
+        })
+        .catch(error => console.log(error)
+        )
+}
+  validateUser=()=>{
+    const {GetTasks,GetChart,verifyFromServer}=this;
+    verifyFromServer();
+    axios.post("https://evening-dawn-93464.herokuapp.com/api/verify",{
+      "auth_token":sessionStorage.getItem("serverAUTHTOKEN")
+    })
+    .then(function(response) {
+      if(response.data.isloggedIn){
+      GetTasks();
+      GetChart();
+      try {
+        this.handleChartLogic()
+        
+      } catch (error) {
+        console.log(error)
+      }
     }
+  
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+  componentDidMount() {
+    this.validateUser()
+   
    
 
   }
@@ -271,7 +303,7 @@ class AdminLandingPage extends React.Component {
             </TableBody>
           </Table>
         </div>
-        <TablePagination
+        {/* <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={data.length}
@@ -285,7 +317,7 @@ class AdminLandingPage extends React.Component {
           }}
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
-        />
+        /> */}
       </Paper>
 
 

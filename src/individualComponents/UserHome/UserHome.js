@@ -30,10 +30,11 @@ import { Select } from '@material-ui/core';
 const rows = [
   { id: "id", numeric: false, disablePadding: true, label: "S.no" },
   { id: "name", numeric: true, disablePadding: false, label: "TaskName" },
-  { id: "points", numeric: true, disablePadding: false, label: "ponts" },
+  { id: "points", numeric: true, disablePadding: false, label: "points" },
   { id: "status", numeric: true, disablePadding: false, label: "Status" },
   { id: "Delete", numeric: true, disablePadding: false, label: "DeleteTask" }
 ];
+
 
 
 // Table Header
@@ -108,7 +109,7 @@ class UserHome extends React.Component {
     setOpen:false,
 
     data: {
-      "uuid": "1",
+      "uuid":sessionStorage.serverUUID,
       "month": null,
       "week": null
     },
@@ -169,11 +170,13 @@ class UserHome extends React.Component {
 //addition of task for particular user api
   PostTask = () => {
     const { addTask, data } = this.state;
+
     const {GetTasks}=this;
     console.log(addTask, "jbecfhjs")
+
     axios.post("https://still-river-36033.herokuapp.com/api/addtask", {
 
-      "uuid": "1",
+      "uuid": data.uuid,
       "task_name": addTask.Topic,
       "points": addTask.Points,
       "month": data.month,
@@ -221,8 +224,14 @@ class UserHome extends React.Component {
   TaskhandleChangeButton = () => {
     const { addTask } = this.state;
 
-    this.PostTask();
-    this.handleClose();
+    if(addTask.Topic&& addTask.Points){
+      this.PostTask();
+      this.handleClose();
+    }else{
+      alert("Please Enter Topic and points")
+    }
+   
+    
   }
   //setting current month and week for the current user 
   componentWillMount() {
@@ -231,11 +240,29 @@ class UserHome extends React.Component {
     data.month = selectedMonth;
     data.week = selectedWeek;
   }
+validateUser=()=>{
+  const {GetTasks}=this;
+ 
+  axios.post("https://evening-dawn-93464.herokuapp.com/api/verify",{
+    "auth_token":sessionStorage.getItem("serverAUTHTOKEN")
+  })
+  .then(function(response) {
+    if(response.data.isloggedIn){
+    GetTasks();
+  }
+
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
 //calling getTask appi
   componentDidMount() {
-    this.GetTasks()
+    this.validateUser()
 
   }
+
+  
   //setting the response in state 
   setTasks = tasklist => {
     this.setState({ tasklist });
@@ -271,7 +298,7 @@ class UserHome extends React.Component {
 {/* DialugeUI */}
 
 <div>
-         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+         <Dialog  open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={'sm'} maxWidth={'sm'} >
          <DialogTitle id="form-dialog-title">New Task</DialogTitle>
          <DialogContent>
            <DialogContentText>
@@ -365,7 +392,7 @@ class UserHome extends React.Component {
             </TableBody>
           </Table>
         </div>
-        <TablePagination
+        {/* <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={data.length}
@@ -379,7 +406,7 @@ class UserHome extends React.Component {
           }}
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
-        />
+        /> */}
       </Paper>
         
         
