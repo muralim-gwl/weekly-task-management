@@ -30,7 +30,7 @@ import { Select } from '@material-ui/core';
 const rows = [
   { id: "id", numeric: false, disablePadding: true, label: "S.no" },
   { id: "name", numeric: true, disablePadding: false, label: "TaskName" },
-  { id: "points", numeric: true, disablePadding: false, label: "ponts" },
+  { id: "points", numeric: true, disablePadding: false, label: "points" },
   { id: "status", numeric: true, disablePadding: false, label: "Status" },
   { id: "Delete", numeric: true, disablePadding: false, label: "DeleteTask" }
 ];
